@@ -84,16 +84,10 @@ void comparetocols(int rgb[], int cmatch[])
 {
     int colours[] = {0, 95, 135, 175, 215, 255};
     int i, j;
-    /* i = j = 0; */
 
-    /* while (i < 3)    // 3 is how many colour components there are */
     for (i = 0; i < 3; ++i)    // 3 is how many colour components there are
     {
         for (j = 0; rgb[i] > colours[j]; ++j);
-        /* while (rgb[i] > colours[j]) */
-        /* { */
-        /*     ++j; */
-        /* } */
 
         /* Go up or down if  rgb[i]  is on the midpoint, e.g. 155 between 135 and 175? Offer both? */
         if (rgb[i] - colours[j - 1] < colours[j] - rgb[i])    // if on a midpoint, this chooses the higher value
@@ -106,9 +100,6 @@ void comparetocols(int rgb[], int cmatch[])
             cmatch[i] = colours[j];
             cmatch[i + 3] = colours[j] - rgb[i];
         }
-
-        /* j = 0; */
-        /* ++i; */
     }
 }
 
