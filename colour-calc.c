@@ -1,5 +1,5 @@
 /*
- * This program takes colours from the 24-bit true colour depth and produces the closet match from the 8-bit colour palette.
+ * This program takes colours from the 24-bit true colour depth and produces the closest match from the 8-bit colour palette.
  * Use it for making colours schemes for programs that support only 256 colour.
  */
 
@@ -108,14 +108,12 @@ void comparetocols(int rgb[], int cmatch[])
     }
 }
 
-/*
- * TODO:
+/* TODO:
  * Once above 95, the jump in rgb component value is 40. So if the max difference...
  * between the rgb components is more than half of 40, don't bother finding the...
- * closest grey match because there will necessarily be a colour match that is closer.
- */
+ * closest grey match because there will necessarily be a colour match that is closer. */
 void comparetogrey(int rgb[], int gmatch[])
-{   /* the last element of  greys[]  is there only to account for  average  being greater than 238 */
+{   // the last element of  greys[]  is there only to account for  average  being greater than 238
     int greys[] = {0, 8, 18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128, 138, 148, 158, 168, 178, 188, 192, 198, 208, 218, 228, 238, 255};
     int i, j, average;
 
