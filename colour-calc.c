@@ -1,3 +1,8 @@
+/*
+ * This program takes colours from the 24-bit true colour depth and produces the closet match from the 8-bit colour palette.
+ * Use it for making colours schemes for programs that support only 256 colour.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -113,18 +118,12 @@ void comparetogrey(int rgb[], int gmatch[])
 {   /* the last element of  greys[]  is there only to account for  average  being greater than 238 */
     int greys[] = {0, 8, 18, 28, 38, 48, 58, 68, 78, 88, 98, 108, 118, 128, 138, 148, 158, 168, 178, 188, 192, 198, 208, 218, 228, 238, 255};
     int i, j, average;
-    /* j = 0; */
-    average = (rgb[0] + rgb[1] + rgb[2]) / 3;
 
+    average = (rgb[0] + rgb[1] + rgb[2]) / 3;
     for (j = 0; average >= greys[j]; ++j);
-    /* while (average >= greys[j]) */
-    /* { */
-    /*     ++j; */
-    /* } */
 
     if (average - greys[j - 1] < greys[j] - average)
     {
-        /* gmatch[0] = gmatch[1] = gmatch[2] = greys[j - 1]; */
         for (i = 0; i < 3; ++i)
         {
             gmatch[i] = greys[j - 1];
@@ -133,7 +132,6 @@ void comparetogrey(int rgb[], int gmatch[])
     }
     else
     {
-        /* gmatch[0] = gmatch[1] = gmatch[2] = greys[j]; */
         for (i = 0; i < 3; ++i)
         {
             gmatch[i] = greys[j];
@@ -147,17 +145,11 @@ void converthexin(char input[], int rgb[])
 {
     char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
     int i, j, k, l;
-    /*j = */k = l = 0;
-    /* i = 1;    // the first element is  # */
+    k = l = 0;
 
-    for (i = 1; input[i] != '\n'; ++i)
-    /* while (input[i] != '\n') */
+    for (i = 1; input[i] != '\n'; ++i)    // start on 1 because  input[0]  is a #
     {
         for (j = 0; input[i] != hex[j]; ++j);
-        /* while (input[i] != hex[j]) */
-        /* { */
-        /*     ++j; */
-        /* } */
 
         if (i % 2 == 1)
         {
@@ -168,50 +160,32 @@ void converthexin(char input[], int rgb[])
             rgb[k] = l + j;
             ++k;
         }
-
-        /* j = 0; */
-        /* ++i; */
     }
 }
 
 /* turn {'2', '5', '1', ',', '9', ',', '7', '3', '\n', '\0' } into {251, 9, 73} */
 void convertrgbin(char input[], int rgb[])
 {
-    int i, j, c, d/*, o, t, h*/;
-    /*i = */j = d =/*o = t = h =*/ 0;
+    int i, j, c, d;
+    j = d = 0;
     c = -1;
 
     for (i = 0; input[i] != '\0'; ++i)
-    /* while (input[i] != '\0') */
     {
         for (i = i; input[i] != ',' && input[i] != '\n'; ++i);
-        /* while (input[i] != ',' && input[i] != '\n') */
-        /* { */
-        /*     ++i; */
-        /* } */
-
         d = i - (1 + c);
         c = i;
 
         if (d == 1)
         {
-            /* o = input[i - 1] - '0'; */
-            /* rgb[j] = o; */
             rgb[j] = input[i - 1] - '0';
         }
         else if (d == 2)
         {
-            /* t = (input[i - 2] - '0') * 10; */
-            /* o = input[i - 1] - '0'; */
-            /* rgb[j] = o + t; */
             rgb[j] = (input[i - 1] - '0') + ((input[i - 2] - '0') * 10);
         }
         else if (d == 3)
         {
-            /* h = (input[i - 3] - '0') * 100; */
-            /* t = (input[i - 2] - '0') * 10; */
-            /* o = input[i - 1] - '0'; */
-            /* rgb[j] = o + t + h; */
             rgb[j] = (input[i - 1] - '0') + ((input[i - 2] - '0') * 10) + ((input[i - 3] - '0') * 100);
         }
         else
@@ -219,7 +193,6 @@ void convertrgbin(char input[], int rgb[])
             //throw an error, although valid input should never get in here
         }
 
-        /* ++i;    // move past the comma or newline that the for loop stopped on */
         ++j;
     }
 }
@@ -231,24 +204,18 @@ void fixcase(char input[])
         {'a', 'b', 'c', 'd', 'e', 'f'},
         {'A', 'B', 'C', 'D', 'E', 'F'},
     };
-    int i/* = 1*/;    // the first element is  #
-    int j/* = 0*/;
+    int i, j;
 
-    for (i = 1; input[i] != '\n'; ++i)
-    /* while (input[i] != '\n') */
+    for (i = 1; input[i] != '\n'; ++i)    // start on 1 because  input[0]  is a #
     {
         for (j = 0; j < 6; ++j)
-        /* while (j < 6) */
         {
             if (input[i] == letters[0][j])
             {
                 input[i] = letters[1][j];
                 break;
             }
-            /* ++j; */
         }
-        /* j = 0; */
-        /* ++i; */
     }
 }
 
@@ -275,31 +242,20 @@ void loopbasecols(int rgb[], int bmatch[])
     int colours[] = {0, 128};    // 192,192,192 is part of base but  comparetogrey()  captures it
     int base[3];
     int r, g, b, i;
-    /*r = g = b = */i = 0;
+    i = 0;
 
     for (b = 0; b < 2 && i < 2; ++b)    // second condition is just to avoid an infinite loop
-    /* while (b < 2 && i < 2)    // second condition is just to avoid an infinite loop */
     {
         for (g = 0; g < 2; ++g)
-        /* while (g < 2) */
         {
             for (r = 0; r < 2; ++r)
-            /* while (r < 2) */
             {
                 base[0] = colours[r];
                 base[1] = colours[g];
                 base[2] = colours[b];
                 comparetobase(rgb, base, bmatch);
-                /* printf("rgb\t%i %i %i\n", rgb[0], rgb[1], rgb[2]); */
-                /* printf("base\t%i %i %i\n", base[0], base[1], base[2]); */
-                /* printf("bmatch\t%i %i %i\n", bmatch[0], bmatch[1], bmatch[2]); */
-                /* ++r; */
             }
-            /* r = 0; */
-            /* ++g; */
         }
-        /* g = 0; */
-        /* ++b; */
 
         if (b == 1)    // once the loop has run through as if the second condition were not there,...
         {              // run through it again but using 255 instead of 128
@@ -331,20 +287,15 @@ void rgbtohex(int xmatch[], char hexout[])
 
 int main()
 {
-    /* int i; */
     int len = 13;
     int rgb[3], cmatch[6], bmatch[7], gmatch[6];
     char input[len], hexout[8];
 
-    /* for (i = 0; i < 6; ++i) */
-    /* { */
-    /*     bmatch[i] = 0; // this is redundant because any garbage will get overwritten */
-    /* } */
     bmatch[6] = 999;    // set to a number bigger than 3*255 because that is the max diff possible
 
     printf("Enter colour in either of the following formats.\n1)\t#f4c809\n2)\t231,7,49\n");
 
-    while (/*(i = */getcolour(input, len)/*)*/ > 0)
+    while (getcolour(input, len) > 0)
     {
         if (input[0] == '#')
         {
