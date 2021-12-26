@@ -165,10 +165,10 @@ void converthexin(char input[], int rgb[])
 void convertrgbin(char input[], int rgb[])
 {
     int i, j, c, d;
-    j = d = 0;
+    i = 0;
     c = -1;
 
-    for (i = 0; input[i] != '\0'; ++i)
+    for (j = 0; j < 3; ++j)
     {
         for (i = i; input[i] != ',' && input[i] != '\n'; ++i);
         d = i - (1 + c);
@@ -191,7 +191,7 @@ void convertrgbin(char input[], int rgb[])
             //throw an error, although valid input should never get in here
         }
 
-        ++j;
+        ++i;    // move past the comma that the above loop stopped on
     }
 }
 
@@ -235,6 +235,10 @@ int getcolour(char input[], int len)    // nothing here accounts for incorrect i
     return i;
 }
 
+/*
+ * Comparing to these base colours is almost pointless because terminal colour schemes change the base 16.
+ * Who actually uses the default xterm colours which this function produces?
+ */
 void loopbasecols(int rgb[], int bmatch[])
 {
     int colours[] = {0, 128};    // 192,192,192 is part of base but  comparetogrey()  captures it
@@ -304,6 +308,7 @@ int main()
         {
             convertrgbin(input, rgb);
         }
+
         printf(">>%s", input);
         printf(">>%i,%i,%i\n", rgb[0], rgb[1], rgb[2]);
 
