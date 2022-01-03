@@ -74,21 +74,116 @@
  * > the negation operator  !  converts non-zero operands to 0, and a zero operand into a 1
  *   - if (!valid)  is equivalent to  if (valid == 0)
  */
-
-int testa()
-{
-    return 5;
-}
-
-int main()
-{
-    /* char message[] = "What's up, dickhead"; */
-    /* int len = strlen(message); */
-    /* printf("%i\n", len); */
-    if (!testa())
-        printf("success\n");
-    else
-        printf("fuck\n");
-
-    return 0;
-}
+// int main()
+// {
+//     int i;
+//     char c = 98;            // data type conversions work across the assignment
+//     i = c;                  // so here, the value of  c  is converted to an int
+//     printf("||%i\n", i);    // this works as expected, no information is lost when converting from char to int
+//     c = i;
+//     printf("<<%i\n", c);    // calling  c  as an int produces 98
+//     printf(">>%c\n", c);    // calling  c  as a char produces  b
+//     return 0;
+// }
+/*
+ * TYPE CONVERSIONS
+ * > operators that take two operands (binary operators) promote the lower type to the higher type
+ *   - for an int that is multiplied by a float, the int is converted to a float
+ *   - see section 6 of appendix A
+ * > type conversions can be forced using a cast
+ *   - n = sqrt((double) i);
+ *   - sqrt()  expects a double so the int  i  has to be converted
+ * > the parameters given in a function's prototype can serve to convert its arguments to the specified type
+ */
+// int main()
+// {
+//     int i, j;
+//     int c = 97;
+//     char s[] = "piwcfgpq aif gawi sfd";
+//
+//     for (i = j = 0; s[i] != '\0'; i++)
+//     {
+//         if (s[i] != c)    // this removes any instance of  a  from the string
+//         {
+//             s[j++] = s[i];    // this is equivalent to  s[j] = s[i]; ++j;
+//         }
+//     }
+//     s[j] = '\0';
+//
+//     printf("%s\n", s);
+//
+//     return 0;
+// }
+/*
+ * Exercise 2-4
+ * delete any character from one string if that character is also in the other string
+ */
+// int main()
+// {
+//     int i, j, k, l;
+//     char vowels[] = "aeiou";    // remove all vowels from the string
+//     char string[] = "paieuhg qeiuhv pietvg hqei hsn vbqepy vqeiuv gdv bqefugiwcfgpq aif";
+//     char output[100];
+//     l = strlen(vowels);
+//
+//     for (i = k = 0; string[i] != '\0'; ++i)
+//     {
+//         for (j = 0; vowels[j] != '\0'; ++j)
+//         {
+//             if (string[i] == vowels[j])
+//             {
+//                 break;
+//             }
+//         }
+//         if (j == l)
+//         {
+//             output[k++] = string[i];
+//         }
+//     }
+//     output[k] = '\0';
+//
+//     printf("%s\n", output);
+//
+//     return 0;
+// }
+/*
+ * Exercise 2-5
+ * find the location of the first character in one string that that matches any character in another string
+ */
+// int main()
+// {
+//     int i, j, k;
+//     char nums[] = "369";    // damn you fine
+//     char string[] = "dgv nw4vgb9iu dhf7";
+//
+//     for (i = k = 0; string[i] != '\0'; ++i)
+//     {
+//         for (j = 0; nums[j] != '\0' && k == 0; ++j)
+//         {
+//             if (string[i] == nums[j])
+//             {
+//                 k = 1;
+//             }
+//         }
+//
+//         if (k == 1)
+//         {
+//             break;
+//         }
+//     }
+//
+//     if (string[i] == '\0')    // alternatively,  if (i == strlen(string))
+//     {
+//         i = -1;
+//     }
+//
+//     printf("%i\n", i);
+//
+//     return 0;
+// }
+/*
+ * BITWISE OPERATORS
+ * > &   |   ^   <<   >>   ~
+ * > AND, OR, XOR, left shift, right shift, one's complement
+ * > these can be applied only to char and int
+ */
