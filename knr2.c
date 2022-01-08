@@ -339,9 +339,9 @@
  */
 /* Exercise 2-9 */
 // x &= (x - 1);    // sets the rightmost bit of  x  to 0
-// x - 1  flips the lowest order bit, thereby changing an even number to an odd number, and an odd to an even
+// x - 1  flips the lowest order bit that is a 1
 // b & c  produces a 1 only if both bits are 1
-// since the  x - 1  changes the lowest bit, the  &  operation will never produce a 1
+// since the  x - 1  changes the lowest bit that is 1, the  &  operation will never produce a 1
 // int main()
 // {
 //     unsigned int x = 11573;
