@@ -23,7 +23,7 @@ int binarysearch(int x, int nums[], int size)
     high = size - 1;
     i = 1;
 
-    while (low <= high)
+    /* while (low <= high)
     {
         mid = (low + high) / 2;
 
@@ -41,66 +41,29 @@ int binarysearch(int x, int nums[], int size)
         {
             return mid;
         }
-    }
+    } */
 
-    if (x <= nums[size / 10])
+    for (i = 0; i < 100; ++i)
     {
-        high = size / 10;
-        low = 0;
-    }
-    else if (x <= nums[2 * size / 10])
-    {
-        high = 2 * n / 10;
-        low = n / 10 + 1;
-    }
-    else if (x <= 3 * n / 10)
-    {
-        high = 3 * n / 10;
-        low = 2 * n / 10 + 1;
-    }
-    else if (x <= 4 * n / 10)
-    {
-        high = 4 * n / 10;
-        low = 3 * n / 10 + 1;
-    }
-    else if (x <= 5 * n / 10)
-    {
-        high = 5 * n / 10;
-        low = 4 * n / 10 + 1;
-    }
-    else if (x <= 6 * n / 10)
-    {
-        high = 6 * n / 10;
-        low = 5 * n / 10 + 1;
-    }
-    else if (x <= 7 * n / 10)
-    {
-        high = 7 * n / 10;
-        low = 6 * n / 10 + 1;
-    }
-    else if (x <= 8 * n / 10)
-    {
-        high = 8 * n / 10;
-        low = 7 * n / 10 + 1;
-    }
-    else if (x <= 9 * n / 10)
-    {
-        high = 9 * n / 10;
-        low = 8 * n / 10 + 1;
-    }
-    else if (x <= n)
-    {
-        high = n;
-        low = 9 * n / 10 + 1;
-    }
-    else // (x >= n)
-    {
-        printf("not found\n");
+        if (x <= nums[(i + 1) * size / 100])
+        {
+            high = (i + 1) * nums[size / 100];
+            low = (i == 0) ? 0 : i * nums[size / 100 + 1];
+            break; // or  i = 100;
+        }
     }
 
     while (low <= high)
     {
-        //
+        if (x == nums[high])
+        {
+            return x;
+        }
+        else
+        {
+            high -= 1;
+            printf("narrowing search, pass %d\n", i++);
+        }
     }
 
     return -1;
@@ -125,6 +88,7 @@ void binarysearchinit()
             n += (a - '0');
         }
         if (a == EOF) break;
+        printf("%d\n", n);
         printf("%d\n", binarysearch(n, nums, size));
     }
 }
