@@ -31,36 +31,15 @@ int calcrgbdiff(int rgb[])
 
     if (rgb[0] > rgb[1] && rgb[0] > rgb[2])
     {
-        if (rgb[1] > rgb[2])
-        {
-            diff = rgb[0] - rgb[2];
-        }
-        else
-        {
-            diff = rgb[0] - rgb[1];
-        }
+        diff = (rgb[1] > rgb[2]) ? rgb[0] - rgb[2] : rgb[0] - rgb[1];
     }
     else if (rgb[1] > rgb[0] && rgb[1] > rgb[2])
     {
-        if (rgb[0] > rgb[2])
-        {
-            diff = rgb[1] - rgb[2];
-        }
-        else
-        {
-            diff = rgb[1] - rgb[0];
-        }
+        diff = (rgb[0] > rgb[2]) ? rgb[1] - rgb[2] : rgb[1] - rgb[0];
     }
     else
     {
-        if (rgb[0] > rgb[1])
-        {
-            diff = rgb[2] - rgb[1];
-        }
-        else
-        {
-            diff = rgb[2] - rgb[0];
-        }
+        diff = (rgb[0] > rgb[1]) ? rgb[2] - rgb[1] : rgb[2] - rgb[0];
     }
 
     return diff;
@@ -138,7 +117,7 @@ void comparetogrey(int rgb[], int gmatch[])
     }
 }
 
-/* turn {'#', '2', 'F', 'D', '9', 'A', '7', '\n', '\0' } into {47, 217, 167} */
+/* turn {'#', '2', 'F', 'D', '9', 'A', '7', '\n', '\0'} into {47, 217, 167} */
 void converthexin(char input[], int rgb[])
 {
     char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
@@ -161,37 +140,18 @@ void converthexin(char input[], int rgb[])
     }
 }
 
-/* turn {'2', '5', '1', ',', '9', ',', '7', '3', '\n', '\0' } into {251, 9, 73} */
+/* turn {'2', '5', '1', ',', '9', ',', '7', '3', '\n', '\0'} into {251, 9, 73} */
 void convertrgbin(char input[], int rgb[])
 {
-    int i, j, c, d;
-    i = 0;
-    c = -1;
+    int i, j;
 
-    for (j = 0; j < 3; ++j)
+    for (i = j = 0; j < 3; ++j)
     {
-        for (i = i; input[i] != ',' && input[i] != '\n'; ++i);
-        d = i - (1 + c);
-        c = i;
-
-        if (d == 1)
+        for (rgb[j] = 0; input[i] != ',' && input[i] != '\n'; ++i)
         {
-            rgb[j] = input[i - 1] - '0';
+            rgb[j] = (10 * rgb[j]) + (input[i] - '0');
         }
-        else if (d == 2)
-        {
-            rgb[j] = (input[i - 1] - '0') + ((input[i - 2] - '0') * 10);
-        }
-        else if (d == 3)
-        {
-            rgb[j] = (input[i - 1] - '0') + ((input[i - 2] - '0') * 10) + ((input[i - 3] - '0') * 100);
-        }
-        else
-        {
-            //throw an error, although valid input should never get in here
-        }
-
-        ++i;    // move past the comma that the above loop stopped on
+        ++i;    // move past the comma that the inner loop stopped on
     }
 }
 
