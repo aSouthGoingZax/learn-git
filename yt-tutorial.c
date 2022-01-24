@@ -5,8 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-int main()
+void inthebeginning()
 {
     printf("hello, world\n");
     char starType;
@@ -22,41 +21,32 @@ int main()
     fgets(fullName, 24, stdin);
     printf("hello, %s", fullName);
 }
-*/
-//----------------------------------------------
-/*
-int main()
-{
-    sayHi("John", 21);                      // John and 21 and called arguments. These arguments get passed to the function being called.
-    sayHi("Mike", 34);                      // if nothing were in the () of the function being called, the () of sayHi would be empty here too
-    return 0;
-}
 
-void sayHi(char name[], int age)            // anything in the () is called a parameter. It is essentially function's input value(s)
-{
-    printf("Hello, %s. You're %i.", name, age);
-}
- */
-//----------------------------------------------
-/*
-float cubeaNum(float num);                  // prototyping this function above  main()  allows it to be put below  main()
+void sayHi(char name[], int age);
+float cubeaNum(float num);           // prototyping a function above the function that calls it below the calling function
 
-int main()
+void functioncalldemo()
 {
+    sayHi("John", 21);    // John and 21 and called arguments. These arguments get passed to the function being called.
+    sayHi("Mike", 34);    // If nothing were in the () of the function being called, the () of sayHi would be empty here too.
+
     printf("%f\n", cubeaNum(2.0));
     printf("%f\n", cubeaNum(2.5));
     printf("%f\n", cubeaNum(2.5555555));
 }
 
-float cubeaNum(float num)                   // this function is called by another function but is below it because...
-{                                           // this function is prototyped above the function that calls it
-    float answer = num * num * num;
-    return answer;                          // this line could be:  return num * num * num;
+void sayHi(char name[], int age)    // anything in the () is called a parameter. It is essentially the function's input value(s)
+{
+    printf("Hello, %s. You're %i.", name, age);
 }
-*/
-//----------------------------------------------
-/*
-int main()
+
+float cubeaNum(float num)    // this function returns a float, hence its type is float
+{
+    float answer = num * num * num;
+    return answer;    // this line could be:  return num * num * num;
+}
+
+void ifdemo()
 {
     int num1, num2, num3;
     printf("Enter numbers:\n");
@@ -73,15 +63,14 @@ int main()
     {
         printf("%i is biggest.", num3);
     }
-    return 0;
 }
-*/
-//----------------------------------------------
-/*
-int main()
+
+void switchdemo()
 {
     char starType;
+
     scanf(" %c", &starType);
+
     switch (starType)
     {
     case 'O':
@@ -97,77 +86,73 @@ int main()
         printf("star is not first three on main sequence");
         break;
     }
-    return 0;
 }
-*/
-//----------------------------------------------
-/*
-struct GraphicsCard                         // this struct declaration is just an empty framework or scaffolding
-{                                           // multiple structs can be used in your program
+
+struct GraphicsCard    // this struct declaration is just an empty framework or scaffolding
+{                      // multiple structs can be used in your program
     char brand[10];
     char name[15];
     int vram, year;
 };
 
-int main()
+void structdemo()
 {
-    struct GraphicsCard gpu1;               // this  gpu1  struct uses the structure of the  GraphicsCard  struct
-    strcpy(gpu1.brand, "AMD");              // the next struct could be  gpu2
-    strcpy(gpu1.name, "R6900XT");           // gpu1  and  gpu2  are to each other what two ints are to each other
-    gpu1.vram = 16;                         // just another instance of the same data type
+    struct GraphicsCard gpu1;        // this  gpu1  struct uses the structure of the  GraphicsCard  struct
+
+    strcpy(gpu1.brand, "AMD");       // the next struct could be  gpu2
+    strcpy(gpu1.name, "R6900XT");    // gpu1  and  gpu2  are to each other what two ints are to each other
+    gpu1.vram = 16;                  // just another instance of the same data type
     gpu1.year = 2020;
+
     printf("%s %s. Released in %i with %i GB of VRAM.", gpu1.brand, gpu1.name, gpu1.year, gpu1.vram);
-    return 0;
 }
-*/
-//----------------------------------------------
-/*
-int main()
+
+void whileloopdemo()    // a while loop checks the condition before executing the code in the loop
 {
     int i = 1;
+
     while (i < 10)
     {
         printf("%i", i);
-        i++;                                // same as i = i + 1;
-    }                                       // i-- is i = i - 1;
-    return 0;
+        i++;    // same as i = i + 1;
+    }           // i-- is i = i - 1;
 }
 
-int main()
+void dowhileloopdemo()    // a do while loop runs the code in the loop before checking the condition
 {
     int i = 1;
-    do                                      // a do while loop runs the code in the loop before checking the condition
-    {                                       // a while loop checks the condition before executing the code in the loop
+
+    do
+    {
         printf("%i", i);
         i++;
     }
     while (i < 10);
-    return 0;
 }
 
-int main()
+void forloopdemo()
 {
     int i;
     int primeNumbers[] = {2, 3, 5, 7, 11, 13, 17, 19};
-    for (i = 0; i < 8; i++)                 // less than 8 because there are 7 elements in the array
+
+    for (i = 0; i < 8; i++)    // less than 8 because there are 7 elements in the array
     {
         printf("%i\n", primeNumbers[i]);
     }
-    return 0;
 }
-*/
-//----------------------------------------------
-/*
-int main()
+
+void twodimarray()
 {
-    int nums[3][4] =                        // 2D array has 3 rows and 4 columns
+    int i, j;
+    int nums[3][4] =         // 2D array has 3 rows and 4 columns
     {
         {2, 4,  6,  8},
         {3, 6,  9, 12},
         {4, 8, 12, 16},
     };
-    //nums[2][1] = 8;                       // this is how you would specify individual elements of a 2D array
-    int i, j;
+
+    nums[2][1] = 69;         // how to assign a value to a specific element of a 2D array
+
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 4; j++)
@@ -176,68 +161,82 @@ int main()
         }
         printf("\n");
     }
-    return 0;
 }
-*/
-//----------------------------------------------
-/*
+
+void pointerdemo1()
 {
     int myage = 27;
     char startype = 'B';
+
     printf("I am %i. Our sun is a %c class star.\n", myage, startype);
     printf("The physical address in memory of the age variable is %p\n", &myage);
     printf("The physical address in memory of the name variable is %p\n", &startype);
-    int *pmyage = &myage;                   // a pointer is simply the memory address of a variable
-    char *pstartype = &startype;            // so the variable  pmyage  stores the memory address of the  myage  variable
-    printf("%p\n", pmyage);                 // the variable type for pointer must match the type of the variable that it is the memory address of
-    printf("%i\n", *pmyage);                // the asterisk dereferences the pointer, so it goes to that memory address and does some operation
-                                            // it could be to assign a value, get a value, or some other operation
+
+    int *pmyage = &myage;           // a pointer is simply the memory address of a variable
+    char *pstartype = &startype;    // so the variable  pmyage  stores the memory address of the  myage  variable
+
+    printf("%p\n", pmyage);         // the variable type for pointer must match the type of the variable that it is the memory address of
+    printf("%i\n", *pmyage);        // the asterisk dereferences the pointer, so it goes to that memory address and does some operation
+                                    // it could be to assign a value, get a value, or some other operation
     int i;
     int *p;      // this is a pointer to an int
     p = &i;      // use & operator to get a pointer to  i, assign that to  p
     *p = 3;      // use * operator to "dereference"  p, meaning that 3 is assigned to  i
-
-    return 0;    // sometimes you want to know the memory address, so it's convenient to store the address in a variable
+    // sometimes you want to know the memory address, so it's convenient to store the address in a variable
 }
-*/
-//----------------------------------------------
-/*
-int main()
+
+void filehandling()
 {
-    FILE * pFile = fopen("fruits.txt", "w");        // w means write. r means read. a means append. if the file doesn't exist, write will create it
-                                                    // if no path (absolute or relative) is specified, it will create it where the source code file is
+    FILE * pFile = fopen("fruits.txt", "w");    // w means write. r means read. a means append. if the file doesn't exist, write will create it
+                                                // if no path (absolute or relative) is specified, it will create it where the source code file is
     fprintf(pFile, "Raspberry, yum\nApple, okay\nDurian, smelly");
-    fopen("fruits.txt", "a");                       // append adds on to the end of a file
+    fopen("fruits.txt", "a");                   // a means append on to the end of a file
     fprintf(pFile, "\nStrawberry, also yum");
-    fclose(pFile);                                  // if you open a file, always close it
-    return 0;
+    fclose(pFile);                              // if you open a file, always close it
 }
 
-int main()
+void pointerdemo2()
 {
     char line[200];
     FILE * pFile = fopen("fruits.txt", "r");
-    fgets(line, 200, pFile);                //this reads the first 200 characters on the first line of the file and stores them in the  line  variable
+
+    fgets(line, 200, pFile);    //this reads the first 200 characters on the first line of the file and stores them in the  line  variable
     printf("%s", line);
-    fgets(line, 200, pFile);                //using fgets again will read the second line because it increments after each use
+    fgets(line, 200, pFile);    //using fgets again will read the second line because it increments after each use
     printf("%s", line);
     fclose(pFile);
-    return 0;
 }
-*/
-//----------------------------------------------
-/*
-int main()
+
+void assignmenttest()
 {
-    int i, j = 4;                           // be careful if setting like this,  i  will be garbage and  j  will be 4
-    int i = 0, j = 4;                       // setting like this is allowed
+    /* int i, j = 4; */  // don't set like this,  i  will be garbage and  j  will be 4
+    int i = 0, j = 4;    // setting like this is allowed
 
     printf("var i is %i\n", i);
     printf("var j is %i\n", j);
+
     i = i + 1;
     j = j - 1;
+
     printf("var i is now %i\n", i);
     printf("var j is now %i\n", j);
+}
+
+int main()
+{
+    inthebeginning();
+    functioncalldemo();
+    ifdemo();
+    switchdemo();
+    structdemo();
+    whileloopdemo();
+    dowhileloopdemo();
+    forloopdemo();
+    twodimarray();
+    pointerdemo1();
+    filehandling();
+    pointerdemo2();
+    assignmenttest();
+
     return 0;
 }
-*/
