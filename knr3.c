@@ -52,7 +52,7 @@ int binarysearch(int x, int nums[], int size)
             break; // or  i = 100;
         }
     }
-
+    i = 0;
     while (low <= high)
     {
         if (x == nums[high])
@@ -61,7 +61,7 @@ int binarysearch(int x, int nums[], int size)
         }
         else
         {
-            high -= 1;
+            --high;
             printf("narrowing search, pass %d\n", i++);
         }
     }
@@ -92,9 +92,194 @@ void binarysearchinit()
         printf("%d\n", binarysearch(n, nums, size));
     }
 }
+/*
+ * > The switch statement tests whether an expression matches a number of constant integers. After testing a condition, execution...
+ *   falls through to the next case unless explicit action is made to avoid that, e.g.  break;  or  return;
+ * > Falling through can be used to attach several cases to the same block of actions.
+ */
+/*
+ * Exercise 3-2
+ * convert escape sequences into their literal selves and the inverse of that
+ */
+void escape1(char input[], char output[])
+{
+    int i = 0, j = 0;
+    char c;
+
+    while (input[i] != '\0')
+    {
+        switch (input[i])
+        {
+        case '\t':
+            output[j++] = '\\';
+            output[j++] = 't';
+            break;
+        case '\n':
+            output[j++] = '\\';
+            output[j++] = 'n';
+            break;
+        case '\\':
+            output[j++] = '\\';
+            output[j++] = '\\';
+            break;
+        case '\?':
+            output[j++] = '\\';
+            output[j++] = '?';
+            break;
+        case '\"':
+            output[j++] = '\\';
+            output[j++] = '"';
+            break;
+        case '\'':
+            output[j++] = '\\';
+            output[j++] = '\'';
+            break;
+        default:
+            output[j++] = input[i];
+            break;
+        }
+        ++i;
+    }
+    output[j] = '\0';
+
+    printf("+++\n%s\n+++\n", output);
+}
+
+void escape2(char input[], char output[])
+{
+    int i = 0, j = 0;
+    char c;
+
+    while (input[i] != '\0')
+    {
+        if (input[i] == '\\')
+        {
+            switch (input[++i])
+            {
+            case 't':
+                output[j++] = '\t';
+                break;
+            case 'n':
+                output[j++] = '\n';
+                break;
+            case '\\':
+                output[j++] = '\\';
+                break;
+            case '?':
+                output[j++] = '?';
+                break;
+            case '"':
+                output[j++] = '"';
+                break;
+            case '\'':
+                output[j++] = '\'';
+                break;
+            default:    // just a single backslash
+                output[j++] = '\\';
+                output[j++] = input[i];
+                break;
+            }
+        }
+        else
+        {
+            output[j++] = input[i];
+        }
+        ++i;
+    }
+    output[j] = '\0';
+
+    printf("---\n%s\n---\n", output);
+}
+
+/*
+ * > Any of the three expressions in a for loop's control statements can be omitted. If the condition is omitted, it is always true.
+ * > The comma operator separates expressions. The expressions should be closely related to each other. Expressions are evaluated...
+ *   left to right. Typical usage is to process two indices in parallel. The commas that separate variable names and function...
+ *   arguments are not comma operators, and do not guarantee left to right evaluation.
+ */
+/*
+ * Exercise 3-3
+ * expand shorthands like  a-z  and  0-9  into their full list
+ */
+#define BETWEEN(X, A, B) ((A) <= (X) && (X) <= (B))
+
+void expand(char input[], char output[])
+{
+    int i = 0, j = 0, k;
+    // char input[] = "Here is a4-7r-tn exaf-g-h-i-mple a-z of shorD-Ithand.";
+    // char output[1000];
+
+    while (input[i] != '\0')
+    {
+        if ((BETWEEN(input[i], 'a', 'z') && input[i + 1] == '-' && BETWEEN(input[i + 2], 'a', 'z'))
+         || (BETWEEN(input[i], 'A', 'Z') && input[i + 1] == '-' && BETWEEN(input[i + 2], 'A', 'Z'))
+         || (BETWEEN(input[i], '0', '9') && input[i + 1] == '-' && BETWEEN(input[i + 2], '0', '9')))
+        {
+            if (input[i + 3] != '-')    // d-k
+            {
+                k = 0;
+                while (input[i] + k <= input[i + 2])
+                {
+                    output[j++] = input[i] + k++;
+                }
+                i += 3;    // advance past the shorthand notation
+            }
+            else    // input[i + 3] == '-'
+            {
+                if (input[i + 2] > input[i] + 1)    // c-h-
+                {
+                    k = 0;
+                    while (input[i] + k <= input[i + 2])
+                    {
+                        output[j++] = input[i] + k++;
+                    }
+                    i += 3;
+                }
+                else    // c-d-e-f-g  and so on, search forward until there is a break
+                {
+                    for (k = 1; input[i + k] == '-' && input[i + k + 1] == input[i + k - 1] + 1; k += 2);
+                    k = i + k - 1;
+                    while (input[i] <= input[k])
+                    {
+                        output[j++] = input[i];
+                        i += 2;
+                    }
+                    --i;
+                }
+            }
+        }
+        else
+        {
+            output[j++] = input[i++];
+        }
+    }
+    output[j] = '\0';
+
+    printf("%s\n", output);
+}
+
+void getinput()
+{
+    int i = 0;
+    char c;
+    char input[1000], output[1000];    // hard values, bad, but it's fine for this purpose
+
+    printf("Enter text now:\n");
+    while (i < 999 && (c = getchar()) != EOF)
+    {
+        input[i++] = c;
+    }
+    input[i] = '\0';
+
+    /* printf("|||\n%s\n|||\n", input); */
+    escape1(input, output);    // output is longer because escape sequences become two characters
+    escape2(input, output);    // output is shorter because two characters get combined to one character
+    expand(input, output);     // output is longer because shorthand gets expanded
+}
 
 int main()
 {
     binarysearchinit();
+    getinput();
     return 0;
 }
