@@ -8,9 +8,9 @@
 /*
  * > A statement is any line terminated by a semi-colon.
  * > Braces group statements together so that they are syntactically equivalent to a single statement.
- * > if  and  else if  conditions are tests of the numeric value of the expression(s) that forms the condition. If the condition...
- *   is true, i.e. it evaluates to a non-zero value, the statement for that  if  or  else if  is executed. Testing the numeric...
- *   value allows for some shortening of conditions.
+ * > if  and  else if  conditions are tests of the numeric value of the expression(s) that forms the condition. If the...
+ *   condition is true, i.e. it evaluates to a non-zero value, the statement for that  if  or  else if  is executed. Testing...
+ *   the numeric value allows for some shortening of conditions.
  *   - if (expression)  is the same as  if (expression != 0)
  */
 /*
@@ -93,8 +93,8 @@ void binarysearchinit()
     }
 }
 /*
- * > The switch statement tests whether an expression matches a number of constant integers. After testing a condition, execution...
- *   falls through to the next case unless explicit action is made to avoid that, e.g.  break;  or  return;
+ * > The switch statement tests whether an expression matches a number of constant integers. After testing a condition,...
+ *   execution falls through to the next case unless explicit action is made to avoid that, e.g.  break;  or  return;
  * > Falling through can be used to attach several cases to the same block of actions.
  */
 /*
@@ -257,6 +257,103 @@ void expand(char input[], char output[])
 
     printf("%s\n", output);
 }
+/*
+ * Exercise 3-4
+ */
+void inttostr()
+{
+    short a, n = -32768;    // a short's range is -32768 to 32767
+    int sign, i, j, c;     // changing the sign of the lower limit results in 32768
+    char str[10];         // 32768 is 1 above the upper limit
+    i = j = 0;           // hence, the version in the book screws up
+
+    a = (n % 10 < 0) ? (n % 10) * -1 : n % 10;    // isolate the first digit, then...
+    n /= 10;    // make it smaller so that changing the sign doesn't go out of range
+    if ((sign = n) < 0)
+    {
+        n = -n;
+    }
+    str[i++] = a + '0';
+    while (n > 0)
+    {
+        str[i++] = n % 10 + '0';
+        n /= 10;
+    }
+    if (sign < 0)
+    {
+        str[i++] = '-';
+    }
+    str[i] = '\0';
+
+    for (--i, j = 0; j < i; --i, ++j)
+    {
+        c = str[j];
+        str[j] = str[i];
+        str[i] = c;
+    }
+
+    printf("%s\n", str);
+}
+/*
+ * Exercise 3-5
+ * convert integer to a base character representation in a string
+ */
+void inttobase()
+{
+    int n = 30974;
+    short base = 16;
+    int a;
+    short i, j, sign;                 // use shorts to save on memory hehe
+    char basechars[base], str[21];    // the upper limit of an unsigned long is 20 digits long
+
+    i = j = 0;
+    a = base > 10 ? 10 : base;
+
+    while (i < a)
+    {
+        basechars[i] = i + '0';
+        ++i;
+    }
+    if (base > 10)
+    {
+        while (i < base)
+        {
+            basechars[i] = j + 'A';
+            ++i;
+            ++j;
+        }
+    }
+
+    i = j = 0;
+    a = (n % base < 0) ? (n % base) * -1 : n % base;
+    n /= base;
+
+    if ((sign = n) < 0)
+    {
+        n = -n;
+    }
+    str[i++] = basechars[a];
+    while (n > 0)
+    {
+        a = n % base;
+        str[i++] = basechars[a];
+        n /= base;
+    }
+    if (sign < 0)
+    {
+        str[i++] = '-';
+    }
+    str[i] = '\0';
+
+    for (--i, j = 0; j < i; --i, ++j)
+    {
+        a = str[j];
+        str[j] = str[i];
+        str[i] = a;
+    }
+
+    printf("%s\n", str);
+}
 
 void getinput()
 {
@@ -276,10 +373,41 @@ void getinput()
     escape2(input, output);    // output is shorter because two characters get combined to one character
     expand(input, output);     // output is longer because shorthand gets expanded
 }
+/*
+ * > break;  causes immediate exit from the loop that it is in
+ * > continue;  causes the next iteration of the loop to begin, i.e. skip any statements after the  continue;  and perform the...
+ *   test to see if the loop body should be entered again.
+ *   - The increment of a for loop still occurs when a  continue;  is used.
+ * > goto ____;  jumps out of all loops and goes straight to ____:
+ *   - To jump completely out of deeply nested code, use  goto  rather than  break;  because that applies to one loop.
+ *   - The scope of the label to escape to is the function that it is in, exactly like automatic variables.
+ */
+void gotodemo()
+{
+    int i, j;
+
+    for (i = 0; i < 10; ++i)
+    {
+        for (j = 0; j < 50; ++j)
+        {
+            printf("ayup\n");
+            if (i == 6 && j == 42)
+            {
+                goto ayylmao;
+            }
+        }
+    }
+
+ayylmao:
+    printf("yeah boi\n");
+}
 
 int main()
 {
     binarysearchinit();
     getinput();
+    inttostr();
+    inttobase();
+    gotodemo();
     return 0;
 }
