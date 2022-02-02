@@ -354,25 +354,6 @@ void inttobase()
 
     printf("%s\n", str);
 }
-
-void getinput()
-{
-    int i = 0;
-    char c;
-    char input[1000], output[1000];    // hard values, bad, but it's fine for this purpose
-
-    printf("Enter text now:\n");
-    while (i < 999 && (c = getchar()) != EOF)
-    {
-        input[i++] = c;
-    }
-    input[i] = '\0';
-
-    /* printf("|||\n%s\n|||\n", input); */
-    escape1(input, output);    // output is longer because escape sequences become two characters
-    escape2(input, output);    // output is shorter because two characters get combined to one character
-    expand(input, output);     // output is longer because shorthand gets expanded
-}
 /*
  * > break;  causes immediate exit from the loop that it is in
  * > continue;  causes the next iteration of the loop to begin, i.e. skip any statements after the  continue;  and perform the...
@@ -400,6 +381,25 @@ void gotodemo()
 
 ayylmao:
     printf("yeah boi\n");
+}
+
+void getinput()
+{
+    int i = 0;
+    char c;
+    char input[1000], output[1000];    // hard values, bad, but it's fine for this purpose
+
+    printf("Enter text now:\n");
+    while (i < 999 && (c = getchar()) != EOF)
+    {
+        input[i++] = c;
+    }
+    input[i] = '\0';
+
+    /* printf("|||\n%s\n|||\n", input); */
+    escape1(input, output);    // output is longer because escape sequences become two characters
+    escape2(input, output);    // output is shorter because two characters get combined to one character
+    expand(input, output);     // output is longer because shorthand gets expanded
 }
 
 int main()
