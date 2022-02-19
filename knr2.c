@@ -62,6 +62,8 @@
  * ARITHMETIC OPERATORS
  * > +   -   *   /   %
  *   - the  %  operator cannot be applied to floats or doubles
+ *   - /  and  %  have machine dependent behaviour for negative numbers, beware
+ * > C has no exponentiation operator
  *
  * RELATIONAL & LOGICAL OPERATORS
  * > ==   !=   >   >=   <   <=
@@ -73,6 +75,17 @@
  * > if a relational or logical expression is true, it has value 1; 0 if false
  * > the negation operator  !  converts non-zero operands to 0, and a zero operand into a 1
  *   - if (!valid)  is equivalent to  if (valid == 0)
+ *
+ * TYPE CONVERSIONS
+ * > operators that take two operands (binary operators) promote the lower type to the higher type
+ *   - for an int that is multiplied by a float, the int is converted to a float
+ *   - see section 6 of appendix A
+ * > beware of values overflowing types
+ * > beware of variables of the same type producing a different type
+ * > type conversions can be forced using a cast
+ *   - n = sqrt((double) i);
+ *   - sqrt()  expects a double so the int  i  has to be converted
+ * > the parameters given in a function's prototype can serve to convert its arguments to the specified type
  */
 int typeconversiondemo()
 {
@@ -83,18 +96,20 @@ int typeconversiondemo()
     c = i;
     printf("<<%i\n", c);    // calling  c  as an int produces 98
     printf(">>%c\n", c);    // calling  c  as a char produces  b
+
+    int x = 400, y = 200;
+    long z;
+    z = x * y;              // no type conversion is done because they're both ints, but...
+    z = (long) x * y;       // 80000 doesn't fit in an int, so using a cast is necessary
+
+    int m = 7;
+    float n;
+    n = m / 2;    // does not work because two ints produce a decimal and no type conversion is done
+    n = m / 2.0;  // does work, alternatively:  n = (float) m / 2;
+
     return 0;
 }
 /*
- * TYPE CONVERSIONS
- * > operators that take two operands (binary operators) promote the lower type to the higher type
- *   - for an int that is multiplied by a float, the int is converted to a float
- *   - see section 6 of appendix A
- * > type conversions can be forced using a cast
- *   - n = sqrt((double) i);
- *   - sqrt()  expects a double so the int  i  has to be converted
- * > the parameters given in a function's prototype can serve to convert its arguments to the specified type
- *
  * INCREMENT & DECREMENT OPERATORS
  * > ++   --
  * > ++i  returns the value of  i  after incrementing
