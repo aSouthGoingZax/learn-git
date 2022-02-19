@@ -8,9 +8,9 @@
 /*
  * > A statement is any line terminated by a semi-colon.
  * > Braces group statements together so that they are syntactically equivalent to a single statement.
- * > if  and  else if  conditions are tests of the numeric value of the expression(s) that forms the condition. If the...
- *   condition is true, i.e. it evaluates to a non-zero value, the statement for that  if  or  else if  is executed. Testing...
- *   the numeric value allows for some shortening of conditions.
+ * > if  and  else if  conditions are tests of the numeric value of the expression(s) that forms the condition. If...
+ *   the condition is true, i.e. it evaluates to a non-zero value, the statement for that  if  or  else if  is...
+ *   executed. Testing the numeric value allows for some shortening of conditions.
  *   - if (expression)  is the same as  if (expression != 0)
  */
 /*
@@ -93,8 +93,9 @@ void binarysearchinit()
     }
 }
 /*
- * > The switch statement tests whether an expression matches a number of constant integers. After testing a condition,...
- *   execution falls through to the next case unless explicit action is made to avoid that, e.g.  break;  or  return;
+ * > The switch statement tests whether an expression matches a number of constant integers. After testing a...
+ *   condition, execution falls through to the next case unless explicit action is made to avoid that, e.g.
+ *   - break;  or  return;
  * > Falling through can be used to attach several cases to the same block of actions.
  */
 /*
@@ -192,10 +193,11 @@ void escape2(char input[], char output[])
 }
 
 /*
- * > Any of the three expressions in a for loop's control statements can be omitted. If the condition is omitted, it is always true.
- * > The comma operator separates expressions. The expressions should be closely related to each other. Expressions are evaluated...
- *   left to right. Typical usage is to process two indices in parallel. The commas that separate variable names and function...
- *   arguments are not comma operators, and do not guarantee left to right evaluation.
+ * > Any of the three expressions in a for loop's control statements can be omitted. If the condition is omitted, it...
+ *   is always true.
+ * > The comma operator separates expressions. The expressions should be closely related to each other. Expressions...
+ *   are evaluated left to right. Typical usage is to process two indices in parallel. The commas that separate...
+ *   variable names and function arguments are NOT comma operators, and do not guarantee left to right evaluation.
  */
 /*
  * Exercise 3-3
@@ -267,13 +269,13 @@ void inttostr()
     char str[10];         // 32768 is 1 above the upper limit
     i = j = 0;           // hence, the version in the book screws up
 
-    a = (n % 10 < 0) ? (n % 10) * -1 : n % 10;    // isolate the first digit, then...
-    n /= 10;    // make it smaller so that changing the sign doesn't go out of range
     if ((sign = n) < 0)
     {
+        a = -(n % 10);    // isolate the first digit, then...
+        n /= 10;          // make it smaller so that changing the sign doesn't go out of range
         n = -n;
+        str[i++] = a + '0';
     }
-    str[i++] = a + '0';
     while (n > 0)
     {
         str[i++] = n % 10 + '0';
@@ -325,14 +327,14 @@ void inttobase()
     }
 
     i = j = 0;
-    a = (n % base < 0) ? (n % base) * -1 : n % base;
-    n /= base;
 
     if ((sign = n) < 0)
     {
+        a = -(n % base);
+        n /= base;
         n = -n;
+        str[i++] = basechars[a];
     }
-    str[i++] = basechars[a];
     while (n > 0)
     {
         a = n % base;
@@ -356,13 +358,29 @@ void inttobase()
 }
 /*
  * > break;  causes immediate exit from the loop that it is in
- * > continue;  causes the next iteration of the loop to begin, i.e. skip any statements after the  continue;  and perform the...
- *   test to see if the loop body should be entered again.
+ * > continue;  causes the next iteration of the loop to begin, i.e. skip any statements after the  continue;  and...
+ *   perform the test to see if the loop body should be entered again.
  *   - The increment of a for loop still occurs when a  continue;  is used.
  * > goto ____;  jumps out of all loops and goes straight to ____:
- *   - To jump completely out of deeply nested code, use  goto  rather than  break;  because that applies to one loop.
+ *   - To jump completely out of deeply nested code, use  goto  rather than  break;  because break applies to one loop.
  *   - The scope of the label to escape to is the function that it is in, exactly like automatic variables.
  */
+void continuedemo()
+{
+    char line[1000];
+
+    while(readinput(line) > 0)
+    {
+		if(line[0] == '#')
+        {
+            continue;
+        }
+        // some lines that
+        // do whatever
+        // you want doing
+    }
+}
+
 void gotodemo()
 {
     int i, j;
