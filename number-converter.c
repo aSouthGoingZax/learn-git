@@ -32,16 +32,15 @@ void inttobase(long num, short outbase, char numasstr[])
     char basechars[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};    // why waste computation?
     int a;
     short i, j, sign;
-
     i = j = 0;
-    a = (num % outbase < 0) ? (num % outbase) * -1 : num % outbase;    // isolate the first digit, then...
-    num /= outbase;    // make the number smaller so that flipping the sign doesn't go out of range
 
     if ((sign = num) < 0)
     {
+        a = -(num % outbase);    // isolate the first digit, then...
+        num /= outbase;          // make the number smaller so that flipping the sign doesn't go out of range
         num = -num;
+        numasstr[i++] = basechars[a];
     }
-    numasstr[i++] = basechars[a];
     while (num > 0)
     {
         a = num % outbase;
