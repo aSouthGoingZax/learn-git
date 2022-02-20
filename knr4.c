@@ -342,12 +342,12 @@ int main()
     char pttrn[] = "the";
     int n = -5;
 
-    // printf("%d\n", lastoccurinstr(str, pttrn));
-    // printf("%f\n", strtofloat("835.71e-3"));
-    // funcb();
-    // inttostr(n);
-    // recrevstr(str, 0, strlen(str) - 1);
-    // printf("%s\n", str);
+    printf("%d\n", lastoccurinstr(str, pttrn));
+    printf("%f\n", strtofloat("835.71e-3"));
+    funcb();
+    inttostr(n);
+    recrevstr(str, 0, strlen(str) - 1);
+    printf("%s\n", str);
 
     return 0;
 }
